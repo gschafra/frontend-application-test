@@ -46,7 +46,7 @@ ul.navbar-nav {
 		text-align: left;
 		@media (max-width: 767px) {
 			float: none;
-        	border-bottom: 0;
+        	border-bottom: 1px solid lightgray;
 			margin-bottom: 0;
 		}
 		-moz-transition: all 300ms ease-in-out 0s;
@@ -88,10 +88,7 @@ ul.navbar-nav {
 
 /* Promo */
 div.title {
-	@media (max-width: 767px) {
-		padding-top: 50px;
-	}
-	padding: 100px 0 50px 0;
+	padding: 100px 5px 50px 5px;
 	a {
 		text-decoration: none;
 		color: black;
@@ -139,14 +136,17 @@ div.row {
 		display: block;
 	    vertical-align: top;
 	    text-align: center;
-	    -webkit-transition: all .5s ease-in-out;
-	    -moz-transition: all .5s ease-in-out;
-	    -ms-transition: all .5s ease-in-out;
-	    -o-transition: all .5s ease-in-out;
-	    transition: all .5s ease-in-out;
+	    -webkit-transition: all .3s ease-in-out;
+	    -moz-transition: all .3s ease-in-out;
+	    -ms-transition: all .3s ease-in-out;
+	    -o-transition: all .3s ease-in-out;
+	    transition: all .3s ease-in-out;
 	    &:hover {
 	    	transform: translate(0px,-3px);
-			border-bottom: 5px solid lightgreen;
+			border-bottom: 2px solid lightgrey;
+	    }
+	    p {
+	    	padding-bottom: 5px;
 	    }
 	    > h3 {
 	    	font-size: 150%;
@@ -160,6 +160,20 @@ div.row {
 /* Footer */
 div.footer-wrapper {
 	text-align: center;
+	.social-buttons {
+		font-size: 200%;
+		a {
+			-moz-transition: color 0.3s ease-in-out 0s;
+			-ms-transition: color 0.3s ease-in-out 0s;
+			-o-transition: color 0.3s ease-in-out 0s;
+			-webkit-transition: color 0.3s ease-in-out 0s;
+			transition: color 0.3s ease-in-out 0s;
+			&:hover {
+				color: #0080c0;
+			}
+			color: grey;
+		}
+	}
 }
 /* Non-mapped fonts (no native fa icon name */
 .icon-contact:before {
