@@ -1,0 +1,15 @@
+{
+    "name":"frontent-application-test",
+    "version":"0.0.1",
+    "author":"Guenter Schafranek",
+    "private":true,
+    "devDependencies":{
+        "grunt":"~0.4.5",
+        "grunt-contrib-cssmin":"*",
+        "grunt-contrib-less":"*",
+        "grunt-contrib-uglify":"*",
+        "grunt-contrib-watch":"*",
+        "less-plugin-clean-css":"*",
+        "matchdep":"*"
+    }
+}
