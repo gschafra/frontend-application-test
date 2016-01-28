@@ -129,8 +129,41 @@ div.title .slogon {
   }
 }
 /* Content */
-#slider {
+div.slider {
+  overflow: hidden;
+  margin: 2rem auto;
+  width: 600px;
+}
+div.slider div.slides {
+  transition: all 1s ease-in-out;
   width: 2400px;
+  position: relative;
+}
+div.slider div.slides .part {
+  float: left;
+  padding-left: 0;
+  padding-right: 0;
+}
+div.slider div.part div.slideimg {
+  height: 300px;
+  margin: 0;
+  padding: 0;
+  background: transparent url("../img/loader.gif") no-repeat center center;
+}
+div.slider div.part div.slideimg.loaded img {
+  opacity: 1;
+}
+div.slider div.part div.slideimg.paused img {
+  opacity: 0.7 !important;
+}
+div.slider div.part div.slideimg img {
+  height: 300px;
+  opacity: 0;
+  transition: all 0.3s ease-in;
+  -moz-transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  -ms-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
 }
 div.row {
   text-align: center;
@@ -152,18 +185,23 @@ div.row div.part {
   display: inline-block;
   vertical-align: top;
   text-align: center;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-div.row div.part:hover {
-  transform: translate(0px, -3px);
-  border-bottom: 2px solid lightgrey;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+  /*&:hover {
+	    	transform: translate(0px,-3px);
+			border-bottom: 2px solid lightgrey;
+	    }*/
 }
 div.row div.part p {
   padding-bottom: 5px;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
 }
 div.row div.part > h3 {
   font-size: 150%;
@@ -171,18 +209,6 @@ div.row div.part > h3 {
   line-height: 140%;
   margin: 1em 0;
   text-transform: uppercase;
-}
-div.row div.part img {
-  width: 100%;
-  opacity: 0;
-  transition: opacity 0.25s ease-in;
-  -moz-transition: opacity 0.25s ease-in;
-  -webkit-transition: opacity 0.25s ease-in;
-  -ms-transition: opacity 0.25s ease-in;
-  -o-transition: opacity 0.25s ease-in;
-}
-div.row div.part img.load {
-  opaciy: 1;
 }
 /* Footer */
 div.footer-wrapper {

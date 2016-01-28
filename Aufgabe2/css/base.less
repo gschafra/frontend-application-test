@@ -1,4 +1,9 @@
 /* CSS-Anpassungen bitte hier */
+//Variables
+@sliderwidth: 600px;
+@slidescount: 4;
+
+//Definition
 * {
 	margin: 0;
 	padding: 0;
@@ -122,10 +127,10 @@ div.title {
 div.slider {
 	overflow: hidden;
 	margin: 2rem auto;
-	width: 600px;
+	width: @sliderwidth;
 	div.slides {
 		transition: all 1.0s ease-in-out;
-		width: 2400px;
+		width: @sliderwidth * @slidescount;
 		position: relative;
 		.part {
 			float: left;
@@ -134,22 +139,29 @@ div.slider {
 		}
 	}
 	div.part {
-	    img {
-	    	height: 300px;
-	    	opacity: 0;
-			transition: all 1s ease-in;
-			-moz-transition: all 1s ease-in;
-			-webkit-transition: all 1s ease-in;
-			-ms-transition: all 1s ease-in;
-			-o-transition: all 1s ease-in;
-			&.load {
-				opacity: 1;
-			}
-	    }
 	    div.slideimg {
 	    	height: 300px;
 	    	margin: 0;
 	    	padding: 0;
+	    	background: transparent url("../img/loader.gif") no-repeat center center;
+	    	&.loaded {
+	    		img {
+					opacity: 1 !important;
+				}
+				background-image: url("../img/pause_trans_s.png");
+			}
+			&.paused img {
+				opacity: 0.7 !important;
+			}
+			img {
+				height: 300px;
+				opacity: 0;
+				transition: all 0.3s ease-in;
+				-moz-transition: all 0.3s ease-in;
+				-webkit-transition: all 0.3s ease-in;
+				-ms-transition: all 0.3s ease-in;
+				-o-transition: all 0.3s ease-in;
+			}
 	    }
 	}
 }
@@ -167,10 +179,9 @@ div.row {
 		    padding: 0px 5px;
 		}*/
 		margin: auto;
-		width: 600px;
+		width: @sliderwidth;
 		padding: 0px 14px;
 		display: inline-block;
-		/*display: none;*/
 	    vertical-align: top;
 	    text-align: center;
 	    -webkit-transition: all 1s ease-in-out;

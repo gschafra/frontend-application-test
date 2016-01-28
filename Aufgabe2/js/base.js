@@ -20,6 +20,7 @@
 		var _currentIdx = 0;
 		var _interval = (typeof interval === 'undefined') ? 3000 : interval;
 		var _intervalId = 0;
+		var _pause = false;
 		var that = this;
 
 		this.getCurrentIdx = function() {
@@ -38,7 +39,7 @@
 			return _images;
 		}
 
-		this.getImageNodes = function() {
+		this.getItemNodes = function() {
 			return _itemNodes;
 		}
 
@@ -63,6 +64,7 @@
 			if (_intervalId) {
 				window.clearInterval(_intervalId);
 			}
+			_pause = true;
 		}
 
 		this.resume = function() {
@@ -70,6 +72,12 @@
 				_intervalId = 0;
 				_intervalId = that.start();
 			}
+			_pause = false;
+		}
+
+		this.toggle = function() {
+			_pause ? that.resume() : that.pause();
+			return _pause;
 		}
 
 		this.stop = function() {
@@ -94,33 +102,42 @@
 		var items = slideitem.querySelectorAll(this.getItemselector());
 		var that = this;
 		var container = this.getContainer();
-		container.addEventListener('mouseover', function(e) {
-			that.pause();
+		/*
+		 * Pause on click
+		 */
+		container.addEventListener('click', function(e) {
+			var paused = that.toggle();
+			var imageWrapper = this.querySelectorAll('div.slideimg');
+			for (var i = 0; i < imageWrapper.length; i++) {
+				paused ? addClass(imageWrapper[i], 'paused') : removeClass(imageWrapper[i], 'paused');
+			}
 			return false;
 		});
-		container.addEventListener('mouseout', function(e) {
-			that.resume();
-			return false;
-		});
+		/*
+		 * Some touch magic planned here
+		 */
+
 		//As requested, not really nice...dirty
 		this.getContainer().addEventListener('transitionend', function(e){
 			that.loadImage(that.getCurrentIdx());
 		});
 		return items;
 	};
+
 	/**
-	 * Show slider item of index idx
+	 * Show image in slider of index idx
 	 *
 	 * @return {Number}
 	 * @author gscha_000
 	 */
 	MySlider.prototype.show = function(idx) {
 		if (typeof idx == 'undefined') idx = 0;
-		var itemNodes = this.getImageNodes();
-		var parent = itemNodes[0].parentElement;
+		var itemNodes = this.getItemNodes();
+		var slidingPanel = itemNodes[0].parentElement;
 		//Pre-add image container
-		this.addDummyImageContainer(idx);
-		parent.style.transform = 'translateX(-'+idx * 600+'px)';
+		var wrapper = this.addImageWrapper(idx);
+		console.log(wrapper.offsetWidth);
+		slidingPanel.style.transform = 'translateX(-'+idx * wrapper.offsetWidth+'px)';
 		return this;
 	}
 
@@ -130,13 +147,14 @@
 	 * @return {Number}
 	 * @author gscha_000
 	 */
-	MySlider.prototype.addDummyImageContainer = function(idx) {
+	MySlider.prototype.addImageWrapper = function(idx) {
 		if (typeof idx == 'undefined') idx = 0;
-		var itemNode = this.getImageNodes()[idx];
-		if (itemNode.firstChild.nodeName == 'DIV' && itemNode.className == 'slideimg')
-			return;
+		var itemNode = this.getItemNodes()[idx];
+		var imgWrapper = itemNode.firstChild;
+		if (this.isImgageWrapper(imgWrapper))
+			return imgWrapper;
 		var div = document.createElement('div');
-		var inserted = itemNode.insertBefore(div, itemNode.firstChild);
+		var inserted = itemNode.insertBefore(div, imgWrapper);
 		inserted.className = 'slideimg';
 		return inserted;
 	}
@@ -149,29 +167,68 @@
 	 */
 	MySlider.prototype.loadImage = function(idx) {
 		if (typeof idx == 'undefined') idx = 0;
-		var itemNode = this.getImageNodes()[idx];
-		var imgContainer = itemNode.firstChild;
+		var itemNode = this.getItemNodes()[idx];
+		var imgWrapper = itemNode.firstChild;
 		//Check, if container already exists
-		if (!(imgContainer.nodeName == 'DIV' && imgContainer.className == 'slideimg')) {
-			imgContainer = this.addDummyImageContainer(idx);
+		if (!this.isImgageWrapper(imgWrapper)) {
+			imgWrapper = this.addImageWrapper(idx);
 		}
 		//Check, if image already exists
-		if (imgContainer.firstChild && imgContainer.firstChild.nodeName == 'IMG')
+		if (imgWrapper.firstChild && imgWrapper.firstChild.nodeName == 'IMG')
 			return;
 		var img = document.createElement('img');
 		var image = this.getImages()[idx];
 		img.setAttribute('src', image.src);
 		img.setAttribute('alt', image.alt);
-		var inserted = imgContainer.insertBefore(img, imgContainer.firstChild);
-		inserted.className = 'load';
+		var inserted = imgWrapper.insertBefore(img, imgWrapper.firstChild);
+		addClass(imgWrapper, 'loaded');
+	}
+
+	MySlider.prototype.isImgageWrapper = function(element) {
+		return (element.nodeName == 'DIV' && hasClass(element, 'slideimg'));
+	}
+
+	/**
+	 * Add a class
+	 *
+	 * @param {String} element
+	 * @param {String} classname
+	 */
+	function addClass(element, classname) {
+		if (!hasClass(element, classname)) {
+			element.className += (' '+classname);
+		}
+	}
+
+	/**
+	 * Remove a class
+	 *
+	 * @param {String} element
+	 * @param {String} classname
+	 */
+	function removeClass(element, classname) {
+		if (hasClass(element, classname)) {
+			element.className = element.className.replace(' '+classname, '');
+		}
+	}
+
+	/**
+	 * Check if class exists a class
+	 *
+	 * @param {String} element
+	 * @param {String} classname
+	 * @return {Boolean}
+	 */
+	function hasClass(element, classname) {
+		return (element.className.indexOf(classname) > -1);
 	}
 
 	//Instantiating sliders
 	var images = [
-		{'src':'img/3.jpg', 'alt':'Dafür stehen wir' },
-		{'src':'img/3.jpg', 'alt':'Dafür stehen wir' },
-		{'src':'img/3.jpg', 'alt':'Dafür stehen wir' },
-		{'src':'img/3.jpg', 'alt':'Dafür stehen wir' }
+		{'src':'img/1.jpg', 'alt':'Dafür stehen wir' },
+		{'src':'img/2.jpg', 'alt':'Entwicklung' },
+		{'src':'img/3.png', 'alt':'Marketing' },
+		{'src':'img/4.jpg', 'alt':'Team' }
 	];
 	var sliderNodes = document.getElementsByClassName('slider');
 	for (var i = 0; i < sliderNodes.length; i++) {
