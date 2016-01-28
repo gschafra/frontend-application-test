@@ -128,7 +128,7 @@ div.slider {
 	overflow: hidden;
 	margin: 2rem auto;
 	width: @sliderwidth;
-	div.slides {
+	div.slidesWrap {
 		transition: all 1.0s ease-in-out;
 		width: @sliderwidth * @slidescount;
 		position: relative;
@@ -163,6 +163,37 @@ div.slider {
 				-o-transition: all 0.3s ease-in;
 			}
 	    }
+	}
+	div.slideSelect {
+		a {
+			&:hover {
+				width: 14px;
+		    	height: 14px;
+		    	background: #0080c0;
+		    }
+		    &.active {
+		    	background: black;
+		    }
+		    margin-left: 16px;
+		    margin-top: 15px;
+		    width: 12px;
+		    height: 12px;
+		    float: left;
+		    text-indent: -4000px;
+		    position: relative;
+		    background: gray;
+		    -webkit-border-radius: 50%;
+		    -moz-border-radius: 50%;
+		    -o-border-radius: 50%;
+		    -ms-border-radius: 50%;
+		    border-radius: 50%;
+		    transition: all 0.3s ease-in-out;
+			-moz-transition: all 0.3s ease-in-out;
+			-webkit-transition: all 0.3s ease-in-out;
+			-ms-transition: all 0.3s ease-in-out;
+			-o-transition: all 0.3s ease-in-out;
+	    }
+
 	}
 }
 div.row {

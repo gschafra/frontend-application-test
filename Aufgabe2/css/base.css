@@ -134,12 +134,12 @@ div.slider {
   margin: 2rem auto;
   width: 600px;
 }
-div.slider div.slides {
+div.slider div.slidesWrap {
   transition: all 1s ease-in-out;
   width: 2400px;
   position: relative;
 }
-div.slider div.slides .part {
+div.slider div.slidesWrap .part {
   float: left;
   padding-left: 0;
   padding-right: 0;
@@ -150,8 +150,11 @@ div.slider div.part div.slideimg {
   padding: 0;
   background: transparent url("../img/loader.gif") no-repeat center center;
 }
+div.slider div.part div.slideimg.loaded {
+  background-image: url("../img/pause_trans_s.png");
+}
 div.slider div.part div.slideimg.loaded img {
-  opacity: 1;
+  opacity: 1 !important;
 }
 div.slider div.part div.slideimg.paused img {
   opacity: 0.7 !important;
@@ -164,6 +167,30 @@ div.slider div.part div.slideimg img {
   -webkit-transition: all 0.3s ease-in;
   -ms-transition: all 0.3s ease-in;
   -o-transition: all 0.3s ease-in;
+}
+div.slider div.slideSelect a {
+  margin-left: 16px;
+  width: 12px;
+  height: 12px;
+  float: left;
+  text-indent: -4000px;
+  position: relative;
+  background: gray;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+div.slider div.slideSelect a:hover {
+  width: 20px !important;
+  height: 20px !important;
+  background: #0080c0 !important;
 }
 div.row {
   text-align: center;
