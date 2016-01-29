@@ -31,26 +31,26 @@
 			if (typeof _settings[setting] !== 'undefined')
 				return _settings[setting];
 			return null;
-		}
+		};
 
 		this.getCurrentIdx = function() {
 			return _currentIdx;
-		}
+		};
 
 		this.getContainer = function() {
 			return _container;
-		}
+		};
 
 		this.getItemNodes = function() {
 			return _itemNodes;
-		}
+		};
 
 		this.set = function(idx) {
 			var length = _itemNodes.length;
 			if ( length === 0 || idx > length - 1 || idx == _currentIdx) return;
 			_currentIdx = idx;
 			that.show(_currentIdx);
-		}
+		};
 
 		this.next = function() {
 			var length = _itemNodes.length;
@@ -60,21 +60,21 @@
 			else
 				_currentIdx = 0;
 			that.show(_currentIdx);
-		}
+		};
 
 		this.start = function() {
 			if (_itemNodes.length > 0 && _intervalId === 0) {
 				_intervalId = window.setInterval(that.next, that.getSetting('interval'));
 			}
 			return _intervalId;
-		}
+		};
 
 		this.pause = function() {
 			if (_intervalId) {
 				window.clearInterval(_intervalId);
 			}
 			_pause = true;
-		}
+		};
 
 		this.resume = function() {
 			if (_intervalId) {
@@ -82,21 +82,26 @@
 				_intervalId = that.start();
 			}
 			_pause = false;
-		}
+		};
 
 		this.toggle = function() {
-			_pause ? that.resume() : that.pause();
+			if (_pause) {
+				that.resume();
+			} else {
+				that.pause();
+			}
 			return _pause;
-		}
+		};
 
 		this.stop = function() {
 			that.pause();
 			_intervalId = 0;
-		}
+		};
 
 		_itemNodes = this.init();
 		this.loadImage();
-	}
+	};
+
 	/*
 	 * Prototypal setup
 	 */
@@ -125,7 +130,11 @@
 			var paused = that.toggle();
 			var imageWrapper = this.querySelectorAll('div.'+that.getSetting('imageWrapperClass'));
 			for (var i = 0; i < imageWrapper.length; i++) {
-				paused ? addClass(imageWrapper[i], 'paused') : removeClass(imageWrapper[i], 'paused');
+				if (pause) {
+					addClass(imageWrapper[i], 'paused');
+				} else {
+					removeClass(imageWrapper[i], 'paused');
+				}
 			}
 			return false;
 		});
@@ -162,7 +171,7 @@
 		var selectorContainer = document.createElement('div');
 		var selectorSubContainer = document.createElement('div');
 		for (var i = 0; i < count; i++) {
-			var node = document.createElement('a')
+			var node = document.createElement('a');
 			node.setAttribute('href', '#');
 			node = selectorSubContainer.appendChild(node);
 			(function(index){
@@ -176,14 +185,14 @@
 		              e.preventDefault();
 		              e.stopImmediatePropagation();
 		              return false;
-		        }
+		        };
 		    })(i);
 
 		}
 		selectorContainer.appendChild(selectorSubContainer);
 		addClass(selectorContainer, this.getSetting('chooserClass'));
 		sliderContainer.appendChild(selectorContainer);
-	}
+	};
 
 	/**
 	 * Show image in slider of index idx
@@ -207,7 +216,7 @@
 	  		addClass(buttons[idx], 'active');
 		}
 		return this;
-	}
+	};
 
 	/**
 	 * Add dummy image container containing loader background to item
@@ -224,7 +233,7 @@
 		var inserted = itemNode.insertBefore(div, imgWrapper);
 		inserted.className = this.getSetting('imageWrapperClass');
 		return inserted;
-	}
+	};
 
 	/**
 	 * Load slider image into container if exists index idx
@@ -248,7 +257,7 @@
 		img.setAttribute('alt', image.alt);
 		var inserted = imgWrapper.insertBefore(img, imgWrapper.firstChild);
 		addClass(imgWrapper, 'loaded');
-	}
+	};
 
 	/**
 	 * Check if element is a image wrapper
@@ -258,7 +267,7 @@
 	 */
 	MySlider.prototype.isImgageWrapper = function(element) {
 		return (element.nodeName == 'DIV' && hasClass(element, this.getSetting('imageWrapperClass')));
-	}
+	};
 
 	/**
 	 * Add a class
