@@ -101,7 +101,6 @@
 		_itemNodes = this.init();
 		this.loadImage();
 	};
-
 	/*
 	 * Prototypal setup
 	 */
@@ -130,7 +129,7 @@
 			var paused = that.toggle();
 			var imageWrapper = this.querySelectorAll('div.'+that.getSetting('imageWrapperClass'));
 			for (var i = 0; i < imageWrapper.length; i++) {
-				if (pause) {
+				if (paused) {
 					addClass(imageWrapper[i], 'paused');
 				} else {
 					removeClass(imageWrapper[i], 'paused');
