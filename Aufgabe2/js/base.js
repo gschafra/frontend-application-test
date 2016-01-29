@@ -47,14 +47,14 @@
 
 		this.set = function(idx) {
 			var length = _itemNodes.length;
-			if ( length == 0 || idx > length - 1 || idx == _currentIdx) return;
+			if ( length === 0 || idx > length - 1 || idx == _currentIdx) return;
 			_currentIdx = idx;
 			that.show(_currentIdx);
 		}
 
 		this.next = function() {
 			var length = _itemNodes.length;
-			if ( length == 0) return;
+			if ( length === 0) return;
 			if (_currentIdx < length-1)
 				_currentIdx++;
 			else
@@ -63,7 +63,7 @@
 		}
 
 		this.start = function() {
-			if (_itemNodes.length > 0 && _intervalId == 0) {
+			if (_itemNodes.length > 0 && _intervalId === 0) {
 				_intervalId = window.setInterval(that.next, that.getSetting('interval'));
 			}
 			return _intervalId;
@@ -109,11 +109,12 @@
 		//Wrap slides with div.slides by getting first item of items to be wrapped
 		var sliderContainer = this.getContainer();
 		var items = sliderContainer.querySelectorAll(this.getSetting('selector'));
-		var div = document.createElement('div');
-		addClass(div, this.getSetting('wrapperClass'));
-		div = items[0].parentNode.appendChild(div);
+		var wrapperDiv = document.createElement('div');
+		addClass(wrapperDiv, this.getSetting('wrapperClass'));
+		wrapperDiv.style.width = sliderContainer.offsetWidth * items.length + 'px';
+		wrapperDiv = items[0].parentNode.appendChild(wrapperDiv);
 		for (var i = 0; i < items.length; i++) {
-			div.appendChild(items[i].parentNode.removeChild(items[i]));
+			wrapperDiv.appendChild(items[i].parentNode.removeChild(items[i]));
 		}
 		items = sliderContainer.querySelectorAll(this.getSetting('selector'));
 		var that = this;

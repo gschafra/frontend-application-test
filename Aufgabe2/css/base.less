@@ -1,7 +1,8 @@
 /* CSS-Anpassungen bitte hier */
 //Variables
-@sliderwidth: 600px;
-@slidescount: 4;
+@sliderwidth-small: 300px;
+@sliderwidth-medium: 600px;
+@sliderwidth-large: 800px;
 
 //Definition
 * {
@@ -127,20 +128,39 @@ div.title {
 div.slider {
 	overflow: hidden;
 	margin: 2rem auto;
-	width: @sliderwidth;
+	@media (min-width: 300px) {
+		width: @sliderwidth-small;
+	}
+	@media (min-width: 768px) {
+	    width: @sliderwidth-medium;
+	}
+	@media (min-width: 1024px) {
+	    width: @sliderwidth-large;
+	}
 	div.slidesWrap {
+		display:-moz-box;
+	    display:-webkit-box;
+	    display:box;
+	    /*display: inline-block;*/
+	     -webkit-box-align:end;
+
 		transition: all 1.0s ease-in-out;
-		width: @sliderwidth * @slidescount;
 		position: relative;
 		.part {
-			float: left;
+			/*float: left;*/
+			-moz-box-flex:1.0;
+	    	-webkit-box-flex:1.0;
+	    	box-flex:1.0;
+	    	height: 100%;
+	    	vertical-align: bottom !important;
+
 			padding-left: 0;
 			padding-right: 0;
 		}
 	}
 	div.part {
 	    div.slideimg {
-	    	height: 300px;
+	    	height: 100%;
 	    	margin: 0;
 	    	padding: 0;
 	    	background: transparent url("../img/loader.gif") no-repeat center center;
@@ -154,7 +174,16 @@ div.slider {
 				opacity: 0.7 !important;
 			}
 			img {
-				height: 300px;
+				max-height: 300px;
+				@media (min-width: 300px) {
+					max-width: @sliderwidth-small;
+				}
+				@media (min-width: 768px) {
+				    max-width: @sliderwidth-medium;
+				}
+				@media (min-width: 1024px) {
+				    max-width: @sliderwidth-large;
+				}
 				opacity: 0;
 				transition: all 0.3s ease-in;
 				-moz-transition: all 0.3s ease-in;
@@ -165,6 +194,7 @@ div.slider {
 	    }
 	}
 	div.slideSelect {
+		display: inline-block;
 		a {
 			&:hover {
 				width: 14px;
@@ -175,7 +205,7 @@ div.slider {
 		    	background: black;
 		    }
 		    margin-left: 16px;
-		    margin-top: 15px;
+		    margin-top: 12px;
 		    width: 12px;
 		    height: 12px;
 		    float: left;
@@ -199,18 +229,16 @@ div.slider {
 div.row {
 	text-align: center;
 	div.part {
-		/*@media (min-width: 768px) {
-			position: relative;
-		    display: inline-block;
-		    width: 48%;
-		    padding: 0px 4px;
+		@media (min-width: 300px) {
+			width: @sliderwidth-small;
+		}
+		@media (min-width: 768px) {
+		    width: @sliderwidth-medium;
 		}
 		@media (min-width: 1024px) {
-		    width: 100%;
-		    padding: 0px 5px;
-		}*/
+		    width: @sliderwidth-large;
+		}
 		margin: auto;
-		width: @sliderwidth;
 		padding: 0px 14px;
 		display: inline-block;
 	    vertical-align: top;
